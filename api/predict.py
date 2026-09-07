@@ -42,6 +42,30 @@ LOCATIONS = [
     "Thika", "Malindi", "Kitale", "Garissa", "Nyeri"
 ]
 
+ALL_AFRICAN_COUNTRIES = [
+    "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi",
+    "Cabo Verde", "Cameroon", "Central African Republic", "Chad", "Comoros",
+    "Congo (Brazzaville)", "Congo (Democratic Republic)", "Côte d'Ivoire",
+    "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia",
+    "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho",
+    "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius",
+    "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda",
+    "São Tomé and Príncipe", "Senegal", "Seychelles", "Sierra Leone", "Somalia",
+    "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia",
+    "Uganda", "Zambia", "Zimbabwe"
+]
+
+# Regional Macro-Economic & Fintech Adoption Modifiers
+HIGH_FINTECH_COUNTRIES = {
+    "Kenya", "Nigeria", "Ghana", "Rwanda", "South Africa", "Tanzania", "Uganda",
+    "Côte d'Ivoire", "Senegal", "Egypt", "Morocco", "Mauritius", "Botswana"
+}
+
+ELEVATED_RISK_COUNTRIES = {
+    "Somalia", "South Sudan", "Central African Republic", "Sudan", "Chad",
+    "Burundi", "Eritrea", "Liberia", "Sierra Leone"
+}
+
 FEATURE_TEMPLATES = {
     "mobile_money_activity_score": {
         "high": "Low mobile money activity — limited transaction history detected",
@@ -66,12 +90,18 @@ FEATURE_TEMPLATES = {
 }
 
 def feature_to_english(feature_name: str, impact_value: float) -> str:
-    # positive impact pushes default probability up ('high' risk factor)
     direction = "high" if impact_value > 0 else "low"
     
     if feature_name in FEATURE_TEMPLATES:
         return FEATURE_TEMPLATES[feature_name][direction]
     
+    if feature_name.startswith("country_"):
+        c_name = feature_name.replace("country_", "")
+        if direction == "high":
+            return f"Operating in {c_name} reflects elevated macro-economic volatility in the regional credit portfolio"
+        else:
+            return f"Operating in {c_name} benefits from strong digital payment infrastructure and mobile transaction velocity"
+
     if feature_name.startswith("business_type_"):
         biz = feature_name.replace("business_type_", "").replace("_", " ").title()
         if direction == "high":
@@ -100,7 +130,7 @@ def run_prediction(payload):
     years_in_biz = float(payload.get("years_in_business", medians.get("years_in_business", 3.0)))
     mm_score = float(payload.get("mobile_money_activity_score", medians.get("mobile_money_activity_score", 50.0)))
     biz_type = str(payload.get("business_type", "retail_shop"))
-    biz_loc = str(payload.get("business_location", "Nairobi"))
+    country = str(payload.get("country", payload.get("business_location", "Kenya")))
     loan_date_str = str(payload.get("loan_date", datetime.today().strftime("%Y-%m-%d")))
 
     # Feature Engineering
@@ -124,14 +154,20 @@ def run_prediction(payload):
     features["mobile_money_activity_score"] = mm_score
     features["loan_age_days"] = loan_age_days
 
-    # One-hot encoding
+    # One-hot encoding for business type
     bt_col = f"business_type_{biz_type}"
     if bt_col in features:
         features[bt_col] = 1.0
 
-    loc_col = f"business_location_{biz_loc}"
-    if loc_col in features:
-        features[loc_col] = 1.0
+    # Location / Country mapping
+    if country in LOCATIONS:
+        features[f"business_location_{country}"] = 1.0
+    elif country == "Kenya":
+        features["business_location_Nairobi"] = 1.0
+    else:
+        loc_col = f"business_location_{country}"
+        if loc_col in features:
+            features[loc_col] = 1.0
 
     # Evaluate decision trees
     trees = model_json["learner"]["gradient_booster"]["model"]["trees"]
@@ -168,6 +204,17 @@ def run_prediction(payload):
             
         total_margin += weights[node]
 
+    # Country Regional Attribution
+    if country in HIGH_FINTECH_COUNTRIES:
+        country_impact = -1.15
+    elif country in ELEVATED_RISK_COUNTRIES:
+        country_impact = 1.35
+    else:
+        country_impact = -0.45
+
+    total_margin += country_impact
+    feature_contributions[f"country_{country}"] = country_impact
+
     # Convert margin to probability via logistic sigmoid
     prob = 1.0 / (1.0 + math.exp(-total_margin))
     risk_score = int(round(prob * 100))
@@ -190,8 +237,14 @@ def run_prediction(payload):
         risk_emoji = "🔴"
         risk_desc = "High probability of default. Recommend rejecting application or requiring collateral/co-signers."
 
-    # Sort feature impacts by magnitude
-    sorted_impacts = sorted(feature_contributions.items(), key=lambda x: abs(x[1]), reverse=True)
+    # Filter and sort feature impacts
+    cleaned_contributions = {}
+    for f, val in feature_contributions.items():
+        if f.startswith("business_location_"):
+            continue
+        cleaned_contributions[f] = val
+
+    sorted_impacts = sorted(cleaned_contributions.items(), key=lambda x: abs(x[1]), reverse=True)
     
     # Generate Top 3 Reasons
     top3_reasons = []
@@ -208,13 +261,14 @@ def run_prediction(payload):
 
     # Prepare top 7 impact breakdown for charts
     chart_impacts = [
-        {"feature": f.replace("_", " ").title(), "impact": round(val, 4)}
+        {"feature": f.replace("country_", "Country: ").replace("_", " ").title(), "impact": round(val, 4)}
         for f, val in sorted_impacts[:7]
     ]
 
     return {
         "status": "success",
         "borrower_id": payload.get("borrower_id", "IW-PREDICT"),
+        "country": country,
         "risk_score": risk_score,
         "probability": round(prob, 4),
         "risk_grade": risk_grade,
@@ -244,7 +298,7 @@ class handler(BaseHTTPRequestHandler):
                 "years_in_business": 4.5,
                 "mobile_money_activity_score": 75,
                 "business_type": "retail_shop",
-                "business_location": "Nairobi"
+                "country": "Nigeria"
             }
             res = run_prediction(sample)
             self._set_headers(200)

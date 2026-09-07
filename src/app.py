@@ -232,7 +232,11 @@ with st.form("borrower_form"):
         business_type = st.selectbox("Business Type", options=pp.BUSINESS_TYPES)
 
     with col2:
-        business_location = st.selectbox("Business Location", options=pp.LOCATIONS)
+        business_location = st.selectbox(
+            "Country / Business Location",
+            options=pp.ALL_AFRICAN_COUNTRIES,
+            index=pp.ALL_AFRICAN_COUNTRIES.index("Kenya") if "Kenya" in pp.ALL_AFRICAN_COUNTRIES else 0
+        )
         years_in_business = st.number_input(
             "Years in Business", min_value=0.1, max_value=30.0,
             value=2.0, step=0.5
