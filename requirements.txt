@@ -1,0 +1,4 @@
+# Vercel Serverless Function runtime dependencies
+# The serverless inference engine (api/predict.py) uses Python standard library for instant <10ms cold starts.
+# For local ML retraining or local Streamlit app, install requirements-dev.txt:
+# pip install -r requirements-dev.txt

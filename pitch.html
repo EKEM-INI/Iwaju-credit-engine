@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IWAJU - Next-Gen Credit Underwriting Pitch Deck</title>
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #09090b; /* Sleek near-black */
+            --bg-secondary: #121217; /* Dark charcoal card */
+            --purple-glow: rgba(139, 92, 246, 0.15);
+            --purple-bright: #a78bfa; /* Neon violet */
+            --purple-primary: #8b5cf6; /* Electric purple */
+            --purple-dark: #6d28d9; /* Deep purple */
+            --text-light: #f3f4f6; /* Off-white */
+            --text-muted: #9ca3af; /* Gray */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-light);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Slide Container */
+        .slides-container {
+            flex-grow: 1;
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 80vh;
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                        0 0 50px var(--purple-glow);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Slide Headers and Text */
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-symbol {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--purple-bright), var(--purple-dark));
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .slide-tag {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--purple-bright);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .slide-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Specific Slide Designs */
+        .title-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1b1035 0%, var(--bg-secondary) 70%);
+        }
+
+        .title-slide .logo-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .logo-large-symbol {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--purple-bright), var(--purple-dark));
+            border-radius: 16px;
+            box-shadow: 0 0 30px var(--purple-primary);
+        }
+
+        .title-slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, white, var(--purple-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-slide p {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* Grid layouts for Content Slides */
+        .content-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
+
+        .content-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .highlight-text {
+            color: var(--purple-bright);
+            font-weight: 700;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.15rem;
+            line-height: 1.5;
+        }
+
+        .bullet-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--purple-bright);
+            font-size: 1.2rem;
+        }
+
+        .metric-box {
+            background-color: rgba(9, 9, 11, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .metric-num {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--purple-bright);
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* Interactive UI controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn {
+            background-color: var(--bg-secondary);
+            color: white;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--purple-primary);
+            border-color: var(--purple-bright);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--purple-bright);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px var(--purple-bright);
+        }
+
+        /* Print styling for PDF saving */
+        @media print {
+            body {
+                overflow: visible;
+                height: auto;
+                background-color: white !important;
+                color: black !important;
+            }
+            .slides-container {
+                display: block;
+                max-width: 100%;
+                padding: 0;
+            }
+            .slide {
+                position: relative;
+                page-break-after: always;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: none !important;
+                height: 100vh;
+                margin-bottom: 20px;
+                background-color: white !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                color: black !important;
+            }
+            .logo, .slide-tag, .slide-footer {
+                color: black !important;
+            }
+            .title-slide {
+                background: white !important;
+            }
+            .title-slide h1 {
+                background: none !important;
+                -webkit-text-fill-color: black !important;
+                color: black !important;
+            }
+            .controls {
+                display: none !important;
+            }
+            .metric-box {
+                background-color: #f3f4f6 !important;
+                border: 1px solid #ddd !important;
+                color: black !important;
+            }
+            .metric-num {
+                color: #6d28d9 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slides Container -->
+    <div class="slides-container">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide active title-slide" id="slide-1">
+            <div>
+                <div class="logo-large">
+                    <div class="logo-large-symbol"></div>
+                    <span style="font-size: 3rem; font-weight: 800; font-family: 'Outfit'; letter-spacing: -1px;">IWAJU</span>
+                </div>
+                <h1>Empowering African Lenders</h1>
+                <p>AI-Powered Alternative Credit Underwriting & Explainable Risk Models for MSME Growth.</p>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="nav-btn" onclick="nextSlide()">Begin Pitch ➔</button>
+                    <button class="nav-btn" onclick="window.print()" style="background: transparent; border-color: rgba(255,255,255,0.2);">Save Slide Deck (PDF)</button>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.3); margin-top: 20px;">Use Left / Right arrow keys to navigate slides</div>
+        </div>
+
+        <!-- SLIDE 2: Problem -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <div class="logo"><div class="logo-symbol"></div>IWAJU</div>
+                <div class="slide-tag">The Credit Problem</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-grid-2">
+                    <div>
+                        <h2 style="font-size: 2.2rem; margin-bottom: 20px;">The Invisible MSME Credit Gap</h2>
+                        <ul class="bullet-list">
+                            <li>Over <span class="highlight-text">90% of African merchants</span> are informal and lack traditional credit bureau tracking.</li>
+                            <li>Lenders faces massive credit scoring risks due to a lack of formal accounting, leading to high default rates.</li>
+                            <li>Lenders are forced to reject viable applications, creating a <span class="highlight-text">$330 Billion credit deficit</span> on the continent.</li>
+                        </ul>
+                    </div>
+                    <div class="content-grid-2" style="gap: 16px;">
+                        <div class="metric-box">
+                            <div class="metric-num">90%</div>
+                            <div class="metric-label">Of Small Traders are "Credit Invisible"</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-num">$330B</div>
+                            <div class="metric-label">African MSME Financing Deficit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Slide 2 of 6</span>
+                <span>Alternative Data Lending Solution</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Solution -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <div class="logo"><div class="logo-symbol"></div>IWAJU</div>
+                <div class="slide-tag">Our Solution</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-grid-2">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <h2 style="font-size: 2.2rem;">Unlocking Credit with Alternative Data</h2>
+                        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.5;">
+                            IWAJU is a turnkey, plug-and-play risk engine. We replace credit bureaus with automated pipelines that analyze transactional data that informal merchants actually use every day.
+                        </p>
+                        <ul class="bullet-list">
+                            <li><span class="highlight-text">Mobile Money Activity Analytics</span>: Analyzing digital ledger flow.</li>
+                            <li><span class="highlight-text">Business Longevity Vetting</span>: Rewarding operational maturity.</li>
+                            <li><span class="highlight-text">Regional Portfolio Risk Indexes</span>: Factoring in hyper-local trends.</li>
+                        </ul>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div class="metric-box" style="text-align: left; border-left: 4px solid var(--purple-bright);">
+                            <h3 style="color: white; margin-bottom: 8px;">1. Automated Ingestion</h3>
+                            <p style="color: var(--text-muted); font-size: 0.95rem;">Input data is instantly cleaned, imputing missing values and formatting date trends automatically.</p>
+                        </div>
+                        <div class="metric-box" style="text-align: left; border-left: 4px solid var(--purple-primary);">
+                            <h3 style="color: white; margin-bottom: 8px;">2. Real-Time Scoring</h3>
+                            <p style="color: var(--text-muted); font-size: 0.95rem;">Calibrated Machine Learning runs predictions instantly, outputting risk scores from 0 to 100.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Slide 3 of 6</span>
+                <span>The IWAJU Pipeline</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Technology -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <div class="logo"><div class="logo-symbol"></div>IWAJU</div>
+                <div class="slide-tag">Under the Hood</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-grid-2">
+                    <div>
+                        <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Explainable AI Credit Risk Models</h2>
+                        <ul class="bullet-list">
+                            <li>We run a customized <span class="highlight-text">XGBoost default prediction model</span> calibrated specifically for micro-loans.</li>
+                            <li>To bypass the "Black Box" problem, we integrate <span class="highlight-text">SHAP (Shapley Additive Explanations)</span> directly into our core logic.</li>
+                            <li>The model isolates the exact impact of every single input feature to determine the risk score.</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 30px; border-radius: 16px; border: 1px solid rgba(139, 92, 246, 0.15);">
+                        <h3 style="margin-bottom: 15px; color: var(--purple-bright);">Translating Math to Human Terms</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+                            We group one-hot categories and automatically translate raw SHAP values into simple, actionable justifications for human credit committees.
+                        </p>
+                        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; border-left: 4px solid #e53e3e; font-size: 0.9rem; margin-bottom: 10px;">
+                            ⚠️ <strong>Requested Capital</strong>: Requesting KES 350,000 relative to 0.5 years in business increases the borrower's debt-service burden, increasing risk.
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; border-left: 4px solid #319795; font-size: 0.9rem;">
+                            ✅ <strong>Mobile Money</strong>: The high activity score of 85/100 reflects robust digital transaction flows, reducing risk.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Slide 4 of 6</span>
+                <span>XGBoost & SHAP Architecture</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Product Preview -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <div class="logo"><div class="logo-symbol"></div>IWAJU</div>
+                <div class="slide-tag">Interface Design</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-grid-2">
+                    <div>
+                        <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Intuitive Credit Officer Dashboard</h2>
+                        <ul class="bullet-list">
+                            <li><span class="highlight-text">Real-time Risk Grade Alerts</span>: Color-coded grading (🟢 Low, 🟡 Amber, 🔴 High) to automate processing queues.</li>
+                            <li><span class="highlight-text">Interactive Risk Dial Gauge</span>: Visualized dial to quickly read risk thresholds.</li>
+                            <li><span class="highlight-text">XAI Contribution Chart</span>: Plotly chart showing which factors pushed risk higher or lower.</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: center;">
+                        <!-- Styled Representation of the Dashboard UI -->
+                        <div style="background-color: var(--bg-primary); border: 2px solid var(--purple-primary); border-radius: 16px; padding: 25px; box-shadow: 0 0 20px rgba(139, 92, 246, 0.2); width: 85%; margin: 0 auto;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;">
+                                <span>IWAJU Core (v1.0)</span>
+                                <span>🟢 LOW RISK</span>
+                            </div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 10px;">Borrower PZ-29831</h4>
+                            <div style="width: 120px; height: 120px; border-radius: 50%; border: 8px solid #a78bfa; border-top-color: transparent; margin: 15px auto; display: flex; align-items: center; justify-content: center; transform: rotate(45deg);">
+                                <span style="font-size: 1.5rem; font-weight: 800; transform: rotate(-45deg);">24%</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
+                                ✦ Low Mobile Money Default Probabilities
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Slide 5 of 6</span>
+                <span>Dashboard Interface Preview</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Call To Action -->
+        <div class="slide" id="slide-6" style="background: radial-gradient(circle at center, #1b1035 0%, var(--bg-secondary) 70%); align-items: center; justify-content: center; text-align: center;">
+            <div class="logo-large" style="margin-bottom: 10px;">
+                <div class="logo-large-symbol"></div>
+            </div>
+            <h2 style="font-size: 3rem; margin-bottom: 10px;">Scale Safely with IWAJU</h2>
+            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin-bottom: 45px;">
+                Deploy explainable credit models, reduce credit default risk, and grow your loan portfolio in emerging markets.
+            </p>
+            <div style="display: flex; gap: 15px;">
+                <button class="nav-btn" onclick="prevSlide()">&larr; Back to Deck</button>
+                <button class="nav-btn" onclick="window.print()" style="background: var(--purple-primary); border-color: var(--purple-bright);">Download PDF Slides</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- UI Controls -->
+    <div class="controls">
+        <button class="nav-btn" onclick="prevSlide()">&larr; Previous</button>
+        <div class="progress-dots" id="dots-container"></div>
+        <button class="nav-btn" onclick="nextSlide()">Next &rarr;</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+
+        // Initialize progress dots
+        const dotsContainer = document.getElementById('dots-container');
+        for (let i = 1; i <= totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 1) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateSlideUI() {
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                if (slide) slide.classList.remove('active');
+            }
+            
+            // Show active slide
+            const activeSlide = document.getElementById(`slide-${currentSlide}`);
+            if (activeSlide) activeSlide.classList.add('active');
+
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentSlide - 1) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlideUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlideUI();
+            }
+        }
+
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            updateSlideUI();
+        }
+
+        // Add Keyboard arrow navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
