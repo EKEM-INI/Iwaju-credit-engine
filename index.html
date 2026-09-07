@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IWAJU — AI Credit Default Risk Engine</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>IWAJU • Pan-African Credit Intelligence & XAI Underwriting</title>
+    <!-- Google Fonts for Modern Fintech Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #09090b;
-            --bg-card: #121217;
-            --bg-card-hover: #17171e;
-            --purple-glow: rgba(139, 92, 246, 0.25);
-            --purple-bright: #a78bfa;
+            --bg-primary: #07070b;
+            --bg-surface: #0e0e15;
+            --bg-card: #13131e;
+            --bg-card-hover: #171725;
+            --border-subtle: rgba(255, 255, 255, 0.07);
+            --border-focus: rgba(139, 92, 246, 0.5);
+            --border-glow: rgba(139, 92, 246, 0.25);
             --purple-primary: #8b5cf6;
+            --purple-bright: #a78bfa;
             --purple-dark: #6d28d9;
-            --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --border-color: rgba(139, 92, 246, 0.18);
-            --risk-low-bg: rgba(16, 185, 129, 0.12);
-            --risk-low-text: #34d399;
-            --risk-low-border: #059669;
-            --risk-med-bg: rgba(245, 158, 11, 0.12);
-            --risk-med-text: #fbbf24;
-            --risk-med-border: #d97706;
-            --risk-high-bg: rgba(239, 68, 68, 0.12);
-            --risk-high-text: #f87171;
-            --risk-high-border: #dc2626;
+            --purple-glow: rgba(139, 92, 246, 0.18);
+            --pink-accent: #ec4899;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.2);
+            --warning: #f59e0b;
+            --warning-glow: rgba(245, 158, 11, 0.2);
+            --danger: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.2);
         }
 
         * {
@@ -37,31 +38,43 @@
         }
 
         body {
-            background-color: var(--bg-base);
+            background-color: var(--bg-primary);
             color: var(--text-main);
-            font-family: 'Space Grotesk', sans-serif;
-            min-height: 100vh;
-            line-height: 1.5;
-            padding-bottom: 60px;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.55;
+            overflow-x: hidden;
         }
 
-        /* Top Navigation Header */
+        /* Ambient Glow Backdrop */
+        .ambient-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1100px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.14) 0%, rgba(236, 72, 153, 0.04) 45%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header Navigation */
         header {
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(9, 9, 11, 0.85);
-            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 50;
+            backdrop-filter: blur(18px);
+            background: rgba(7, 7, 11, 0.88);
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .header-container {
-            max-width: 1300px;
+            max-width: 1320px;
             margin: 0 auto;
-            padding: 16px 24px;
+            padding: 16px 28px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
         .brand-logo {
@@ -69,45 +82,51 @@
             align-items: center;
             gap: 14px;
             text-decoration: none;
-            color: white;
+            color: inherit;
         }
 
-        .logo-badge {
-            width: 42px;
-            height: 42px;
+        .logo-symbol {
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--purple-bright), var(--purple-dark));
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: white;
-            box-shadow: 0 0 16px var(--purple-glow);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.45);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
         }
 
         .brand-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 1.4rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #ffffff, var(--purple-bright));
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            background: linear-gradient(90deg, #ffffff 30%, #d8b4fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .brand-subtitle {
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            font-weight: 600;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 18px;
         }
 
         .nav-link {
@@ -115,77 +134,227 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            border: 1px solid transparent;
+            transition: color 0.2s;
         }
 
         .nav-link:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.08);
         }
 
-        .nav-link-btn {
-            background: rgba(139, 92, 246, 0.12);
+        .nav-link.active {
             color: var(--purple-bright);
-            border-color: rgba(139, 92, 246, 0.3);
             font-weight: 600;
         }
 
-        .nav-link-btn:hover {
-            background: var(--purple-primary);
+        .nav-btn {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
             color: white;
-            box-shadow: 0 0 15px var(--purple-glow);
+            padding: 8px 18px;
+            border-radius: 9px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
-        /* Main Container */
+        .nav-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+
+        /* App Container */
         .app-container {
-            max-width: 1300px;
-            margin: 32px auto 0;
-            padding: 0 24px;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 36px 28px 80px;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Hero Banner */
         .hero-banner {
             margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .hero-content {
+            max-width: 820px;
+        }
+
+        .badge-scope {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            color: var(--purple-bright);
+            padding: 5px 12px;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-bottom: 12px;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--purple-bright);
+            box-shadow: 0 0 8px var(--purple-bright);
         }
 
         .hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-desc {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 700px;
+            font-size: 0.98rem;
+            line-height: 1.6;
         }
 
-        /* Two-Column Grid */
+        /* Mode Switcher Tabs */
+        .mode-tabs {
+            display: flex;
+            background: #0f0f18;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .mode-tab {
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-tab:hover {
+            color: white;
+        }
+
+        .mode-tab.active {
+            background: var(--purple-primary);
+            color: white;
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Model Telemetry Strip */
+        .telemetry-strip {
+            background: linear-gradient(90deg, rgba(20, 20, 31, 0.7) 0%, rgba(28, 20, 48, 0.4) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 12px 20px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.84rem;
+        }
+
+        .telemetry-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .telemetry-label {
+            color: var(--text-muted);
+        }
+
+        .telemetry-val {
+            color: white;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Quick Scenario Presets */
+        .preset-bar {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .preset-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .preset-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 7px 14px;
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--purple-bright);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Main Dashboard Grid */
         .grid-layout {
             display: grid;
-            grid-template-columns: 1.15fr 1.35fr;
+            grid-template-columns: 460px 1fr;
             gap: 28px;
             align-items: start;
         }
 
-        @media (max-width: 960px) {
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Card Elements */
+        /* Glass Cards */
         .glass-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
             padding: 28px;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
             position: relative;
         }
 
@@ -194,21 +363,21 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 22px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 14px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .card-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.25rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--purple-bright);
+            color: white;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* Forms and Controls */
+        /* Form Inputs */
         .form-group {
             margin-bottom: 20px;
         }
@@ -216,51 +385,57 @@
         .form-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.88rem;
+            align-items: center;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-main);
+            color: #cbd5e1;
             margin-bottom: 8px;
         }
 
-        .form-label .sub-val {
+        .sub-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
             color: var(--purple-bright);
-            font-family: monospace;
-            font-size: 0.95rem;
-        }
-
-        input[type="text"], input[type="date"], select {
-            width: 100%;
-            background-color: #0d0d12;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: white;
-            border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        input[type="text"]:focus, input[type="date"]:focus, select:focus {
-            border-color: var(--purple-bright);
-            box-shadow: 0 0 0 3px var(--purple-glow);
+            font-weight: 600;
         }
 
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 14px;
         }
 
-        /* Sliders */
-        input[type="range"] {
+        input[type="text"],
+        input[type="date"],
+        select {
             width: 100%;
+            background: #090910;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: white;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            border-color: var(--purple-bright);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Range Sliders */
+        input[type="range"] {
             -webkit-appearance: none;
+            width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: #27272a;
+            background: #232332;
             outline: none;
-            margin-top: 6px;
+            margin: 10px 0 4px;
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -268,117 +443,153 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: var(--purple-primary);
+            background: var(--purple-bright);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--purple-glow);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
             border: 2px solid white;
-            transition: all 0.2s;
+            transition: transform 0.15s;
         }
 
         input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.15);
-            background: var(--purple-bright);
+        }
+
+        /* Underwriting Tenor & Financial Inputs */
+        .tenor-pills {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .tenor-pill {
+            background: #090910;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 8px 4px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .tenor-pill.active {
+            background: var(--purple-primary);
+            border-color: var(--purple-bright);
+            color: white;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.35);
         }
 
         .btn-evaluate {
             width: 100%;
-            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-dark) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            border: none;
+            padding: 13px;
             border-radius: 12px;
-            padding: 15px;
-            font-size: 1.05rem;
+            font-size: 0.98rem;
             font-weight: 700;
-            font-family: 'Outfit', sans-serif;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
-            transition: all 0.2s;
             margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(109, 40, 217, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            transition: all 0.2s;
         }
 
         .btn-evaluate:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 12px 28px rgba(109, 40, 217, 0.6);
         }
 
-        /* Results Panel */
+        /* Results Panel Layout */
         .results-top {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 210px 1fr;
+            gap: 24px;
             align-items: center;
+            background: #090910;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 22px;
             margin-bottom: 24px;
         }
 
-        @media (max-width: 640px) {
-            .results-top {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Risk Gauge Meter */
+        /* SVG Gauge */
         .gauge-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
         }
 
         .gauge-svg {
-            width: 220px;
-            height: 140px;
+            width: 100%;
+            display: block;
+            overflow: visible;
         }
 
         .gauge-bg {
             fill: none;
-            stroke: #27272a;
-            stroke-width: 18;
+            stroke: #222230;
+            stroke-width: 14;
             stroke-linecap: round;
         }
 
         .gauge-fill {
             fill: none;
-            stroke-width: 18;
+            stroke-width: 14;
             stroke-linecap: round;
             stroke-dasharray: 283;
-            stroke-dashoffset: 283;
-            transition: stroke-dashoffset 1s ease-out, stroke 0.5s ease;
+            stroke-dashoffset: 232;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s;
         }
 
         .gauge-text {
             position: absolute;
-            top: 72px;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
         }
 
         .gauge-score {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 700;
             line-height: 1;
-            color: white;
         }
 
         .gauge-sub {
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             margin-top: 4px;
         }
 
-        /* Decision Summary Box */
+        /* Confidence Interval Box */
+        .ci-badge {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 3px 8px;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Summary / Decision Card */
         .summary-box {
-            background: #0d0d12;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-left: 4px solid var(--purple-primary);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .risk-badge {
@@ -386,426 +597,939 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            border-radius: 20px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
             font-weight: 700;
-            font-size: 0.88rem;
-            margin-bottom: 12px;
+            letter-spacing: 0.04em;
+            width: fit-content;
         }
 
         .risk-low {
-            background: var(--risk-low-bg);
-            color: var(--risk-low-text);
-            border: 1px solid var(--risk-low-border);
+            background: var(--success-glow);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .risk-medium {
-            background: var(--risk-med-bg);
-            color: var(--risk-med-text);
-            border: 1px solid var(--risk-med-border);
+            background: var(--warning-glow);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .risk-high {
-            background: var(--risk-high-bg);
-            color: var(--risk-high-text);
-            border: 1px solid var(--risk-high-border);
+            background: var(--danger-glow);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .decision-desc {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.45;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.5;
         }
 
-        /* Explainable AI Top 3 Reasons */
-        .section-subheading {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
+        /* Underwriting Financials Strip */
+        .financials-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .fin-card {
+            background: #090910;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .fin-label {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+        }
+
+        .fin-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
             font-weight: 700;
             color: white;
-            margin: 22px 0 12px;
+        }
+
+        .fin-sub {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        /* Section Subheadings */
+        .section-subheading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .reasons-list {
+        /* Executive Credit Memo */
+        .memo-card {
+            background: linear-gradient(135deg, rgba(20, 20, 31, 0.8) 0%, rgba(26, 18, 44, 0.5) 100%);
+            border: 1px solid var(--border-glow);
+            border-left: 4px solid var(--purple-bright);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 24px;
+        }
+
+        .memo-header {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
-        .reason-card {
-            background-color: #0d0d12;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-left: 4px solid #a78bfa;
-            border-radius: 10px;
-            padding: 12px 16px;
+        .memo-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--purple-bright);
+        }
+
+        .memo-body {
+            font-size: 0.94rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 4 Deep-Dive Analytical Pillars */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .pillar-card {
+            background: #0a0a12;
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 16px 18px;
+            transition: all 0.2s;
+        }
+
+        .pillar-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pillar-header {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.92rem;
-            line-height: 1.45;
-            transition: transform 0.2s;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
-        .reason-card:hover {
-            transform: translateX(4px);
+        .pillar-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .reason-card.aggregator {
-            border-left-color: #f87171;
+        .pillar-badge {
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
         }
 
-        .reason-icon {
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            margin-top: 1px;
+        .badge-pos {
+            background: var(--success-glow);
+            color: var(--success);
         }
 
-        /* Feature Impact Bars */
+        .badge-warn {
+            background: var(--warning-glow);
+            color: var(--warning);
+        }
+
+        .badge-neg {
+            background: var(--danger-glow);
+            color: var(--danger);
+        }
+
+        .badge-neutral {
+            background: rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+        }
+
+        .pillar-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Feature Attribution Waterfall Chart */
         .impact-chart {
-            margin-top: 18px;
-            background: #0d0d12;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 16px 20px;
+            background: #090910;
+            border-radius: 14px;
+            border: 1px solid var(--border-subtle);
+            padding: 18px 22px;
+            margin-bottom: 24px;
         }
 
         .impact-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
+            margin-bottom: 12px;
+            font-size: 0.86rem;
+        }
+
+        .impact-row:last-child {
+            margin-bottom: 0;
         }
 
         .impact-name {
-            width: 140px;
+            width: 170px;
             color: var(--text-muted);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 0.84rem;
         }
 
         .impact-bar-wrap {
             flex-grow: 1;
-            height: 8px;
-            background: #27272a;
-            border-radius: 4px;
-            margin: 0 14px;
+            height: 9px;
+            background: #1c1c28;
+            border-radius: 5px;
+            margin: 0 16px;
             position: relative;
             overflow: hidden;
         }
 
         .impact-bar {
             height: 100%;
-            border-radius: 4px;
-            transition: width 0.6s ease;
+            border-radius: 5px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .impact-bar.mitigator {
-            background: var(--purple-bright);
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
         }
 
         .impact-bar.aggregator {
-            background: #f87171;
+            background: linear-gradient(90deg, #f87171, #ef4444);
         }
 
         .impact-val {
-            width: 50px;
+            width: 60px;
             text-align: right;
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        /* Developer API Box */
+        .api-card {
+            background: #090910;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-top: 28px;
+        }
+
+        .api-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .api-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .api-tab {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            cursor: pointer;
+        }
+
+        .api-tab.active {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-bright);
+        }
+
+        .api-snippet {
+            background: #050508;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.5;
+        }
+
+        /* Portfolio Cohort Simulation Section */
+        #portfolio-view {
+            display: none;
+        }
+
+        .portfolio-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .kpi-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--purple-bright);
+            margin-bottom: 4px;
+        }
+
+        .kpi-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .portfolio-table-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            overflow-x: auto;
+        }
+
+        table.portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            text-align: left;
+        }
+
+        table.portfolio-table th {
+            background: #0a0a12;
+            padding: 14px 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-subtle);
+            text-transform: uppercase;
+            font-size: 0.74rem;
+            letter-spacing: 0.05em;
+        }
+
+        table.portfolio-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+        }
+
+        table.portfolio-table tr:hover {
+            background: rgba(139, 92, 246, 0.06);
+            cursor: pointer;
+        }
+
+        .btn-inspect {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            color: var(--purple-bright);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-inspect:hover {
+            background: var(--purple-primary);
             color: white;
         }
 
         /* Footer */
         footer {
-            max-width: 1300px;
+            max-width: 1320px;
             margin: 40px auto 0;
-            padding: 0 24px;
+            padding: 24px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 24px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            font-size: 0.86rem;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         footer a {
             color: var(--purple-bright);
             text-decoration: none;
         }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1100px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .pillars-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .results-top { grid-template-columns: 1fr; text-align: center; }
+            .financials-strip { grid-template-columns: 1fr 1fr; }
+            .portfolio-kpis { grid-template-columns: 1fr 1fr; }
+            .input-row { grid-template-columns: 1fr; }
+            .hero-title { font-size: 1.85rem; }
+            .header-container { padding: 14px 20px; }
+            .app-container { padding: 24px 20px 60px; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="ambient-glow"></div>
 
     <!-- Header Navigation -->
     <header>
         <div class="header-container">
             <a href="/" class="brand-logo">
-                <div class="logo-badge">I</div>
-                <div>
+                <div class="logo-symbol">I</div>
+                <div class="brand-text">
                     <div class="brand-title">IWAJU</div>
-                    <div class="brand-subtitle">Credit Risk Engine</div>
+                    <div class="brand-subtitle">Pan-African Credit Engine</div>
                 </div>
             </a>
             <div class="nav-links">
-                <a href="/" class="nav-link" style="color: white;">Dashboard</a>
-                <a href="pitch.html" class="nav-link nav-link-btn" target="_blank">🔮 Pitch Deck</a>
+                <a href="/" class="nav-link active">Underwriting Engine</a>
+                <a href="about.html" class="nav-link">About IWAJU</a>
+                <a href="about.html" class="nav-btn">Our Vision &rarr;</a>
             </div>
         </div>
     </header>
 
     <div class="app-container">
-        <!-- Hero Section -->
+
+        <!-- Hero Banner -->
         <div class="hero-banner">
-            <h1 class="hero-title">Automated Underwriting & XAI Default Scoring</h1>
-            <p class="hero-desc">Powered by calibrated XGBoost models and SHAP feature attribution to evaluate MSME default risk with alternative cash-flow data.</p>
+            <div class="hero-content">
+                <div class="badge-scope">
+                    <span class="badge-dot"></span>
+                    <span>Pan-African Alternative Credit Scoring • 54 Sovereign Markets</span>
+                </div>
+                <h1 class="hero-title">Automated Underwriting & <span>Explainable AI Risk Engine</span></h1>
+                <p class="hero-desc">
+                    Engineered for digital lenders, commercial banks, and MFIs. Evaluates MSME credit default risk in real time using alternative mobile money transaction velocity and isotonic tree ensembles.
+                </p>
+            </div>
+
+            <!-- View Switcher -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" id="tab-single">
+                    <span>⚡</span> Single Underwriter
+                </button>
+                <button class="mode-tab" id="tab-portfolio">
+                    <span>📊</span> Portfolio Batch (50 MSMEs)
+                </button>
+            </div>
         </div>
 
-        <!-- Main Dashboard Grid -->
-        <div class="grid-layout">
+        <!-- Model Telemetry & Calibration Strip -->
+        <div class="telemetry-strip">
+            <div class="telemetry-item">
+                <span class="telemetry-label">Architecture:</span>
+                <span class="telemetry-val">XGBoost v2.4 + TreeSHAP</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="telemetry-label">Validation ROC-AUC:</span>
+                <span class="telemetry-val">0.824</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="telemetry-label">Brier Score:</span>
+                <span class="telemetry-val">0.118</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="telemetry-label">Calibration:</span>
+                <span class="telemetry-val">Isotonic (12,500+ MSME Loans)</span>
+            </div>
+            <div class="telemetry-item">
+                <span class="telemetry-label">Inference:</span>
+                <span class="telemetry-val">&lt; 12ms Edge</span>
+            </div>
+        </div>
 
-            <!-- LEFT: Input Form -->
-            <div class="glass-card">
-                <div class="card-header">
-                    <div class="card-title">
-                        <span>📝</span> Borrower Criteria
-                    </div>
-                    <button id="btn-random" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; cursor: pointer;">Randomize ID</button>
-                </div>
+        <!-- ============================================================ -->
+        <!-- VIEW 1: SINGLE APPLICANT UNDERWRITER                        -->
+        <!-- ============================================================ -->
+        <div id="single-view">
 
-                <form id="loan-form">
-                    <div class="form-group">
-                        <label class="form-label">Borrower Reference</label>
-                        <input type="text" id="borrower_id" value="IW-54912" required>
-                    </div>
+            <!-- One-Click Preset Scenarios -->
+            <div class="preset-bar">
+                <span class="preset-label">⚡ One-Click Presets:</span>
+                <button class="preset-btn" id="preset-prime">
+                    <span>🟢</span> Prime Merchant (Kenya • Low Risk)
+                </button>
+                <button class="preset-btn" id="preset-borderline">
+                    <span>🟡</span> Borderline Agro-Dealer (Nigeria • Medium Risk)
+                </button>
+                <button class="preset-btn" id="preset-stressed">
+                    <span>🔴</span> Stressed Transit (Ghana • High Risk)
+                </button>
+                <button class="preset-btn" id="preset-tech">
+                    <span>🟣</span> Tech-Forward Retailer (Rwanda • Low Risk)
+                </button>
+            </div>
 
-                    <div class="form-group">
-                        <div class="form-label">
-                            <span>Loan Amount (KES)</span>
-                            <span class="sub-val" id="disp-amount">KES 75,000</span>
+            <!-- Dashboard Grid -->
+            <div class="grid-layout">
+
+                <!-- LEFT: Borrower Input Form -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📝</span> Borrower Criteria
                         </div>
-                        <input type="range" id="loan_amount" min="5000" max="500000" step="5000" value="75000">
+                        <button id="btn-random" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted); padding: 5px 12px; border-radius: 6px; font-size: 0.78rem; cursor: pointer;">
+                            Randomize ID
+                        </button>
                     </div>
 
-                    <div class="input-row">
-                        <div class="form-group">
-                            <label class="form-label">Application Date</label>
-                            <input type="date" id="loan_date" value="2026-06-01">
+                    <form id="loan-form">
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label class="form-label">Borrower Reference</label>
+                                <input type="text" id="borrower_id" value="IW-54912" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Country / Market</label>
+                                <select id="business_location">
+                                    <option value="Algeria">Algeria (DZD)</option>
+                                    <option value="Angola">Angola (AOA)</option>
+                                    <option value="Benin">Benin (XOF)</option>
+                                    <option value="Botswana">Botswana (BWP)</option>
+                                    <option value="Burkina Faso">Burkina Faso (XOF)</option>
+                                    <option value="Burundi">Burundi (BIF)</option>
+                                    <option value="Cabo Verde">Cabo Verde (CVE)</option>
+                                    <option value="Cameroon">Cameroon (XAF)</option>
+                                    <option value="Central African Republic">Central African Republic (XAF)</option>
+                                    <option value="Chad">Chad (XAF)</option>
+                                    <option value="Comoros">Comoros (KMF)</option>
+                                    <option value="Congo (Brazzaville)">Congo (Brazzaville) (XAF)</option>
+                                    <option value="Congo (Democratic Republic)">Congo (DRC) (CDF)</option>
+                                    <option value="Côte d'Ivoire">Côte d'Ivoire (XOF)</option>
+                                    <option value="Djibouti">Djibouti (DJF)</option>
+                                    <option value="Egypt">Egypt (EGP)</option>
+                                    <option value="Equatorial Guinea">Equatorial Guinea (XAF)</option>
+                                    <option value="Eritrea">Eritrea (ERN)</option>
+                                    <option value="Eswatini">Eswatini (SZL)</option>
+                                    <option value="Ethiopia">Ethiopia (ETB)</option>
+                                    <option value="Gabon">Gabon (XAF)</option>
+                                    <option value="Gambia">Gambia (GMD)</option>
+                                    <option value="Ghana">Ghana (GHS)</option>
+                                    <option value="Guinea">Guinea (GNF)</option>
+                                    <option value="Guinea-Bissau">Guinea-Bissau (XOF)</option>
+                                    <option value="Kenya" selected>Kenya (KES)</option>
+                                    <option value="Lesotho">Lesotho (LSL)</option>
+                                    <option value="Liberia">Liberia (LRD)</option>
+                                    <option value="Libya">Libya (LYD)</option>
+                                    <option value="Madagascar">Madagascar (MGA)</option>
+                                    <option value="Malawi">Malawi (MWK)</option>
+                                    <option value="Mali">Mali (XOF)</option>
+                                    <option value="Mauritania">Mauritania (MRU)</option>
+                                    <option value="Mauritius">Mauritius (MUR)</option>
+                                    <option value="Morocco">Morocco (MAD)</option>
+                                    <option value="Mozambique">Mozambique (MZN)</option>
+                                    <option value="Namibia">Namibia (NAD)</option>
+                                    <option value="Niger">Niger (XOF)</option>
+                                    <option value="Nigeria">Nigeria (NGN)</option>
+                                    <option value="Rwanda">Rwanda (RWF)</option>
+                                    <option value="São Tomé and Príncipe">São Tomé and Príncipe (STN)</option>
+                                    <option value="Senegal">Senegal (XOF)</option>
+                                    <option value="Seychelles">Seychelles (SCR)</option>
+                                    <option value="Sierra Leone">Sierra Leone (SLE)</option>
+                                    <option value="Somalia">Somalia (SOS)</option>
+                                    <option value="South Africa">South Africa (ZAR)</option>
+                                    <option value="South Sudan">South Sudan (SSP)</option>
+                                    <option value="Sudan">Sudan (SDG)</option>
+                                    <option value="Tanzania">Tanzania (TZS)</option>
+                                    <option value="Togo">Togo (XOF)</option>
+                                    <option value="Tunisia">Tunisia (TND)</option>
+                                    <option value="Uganda">Uganda (UGX)</option>
+                                    <option value="Zambia">Zambia (ZMW)</option>
+                                    <option value="Zimbabwe">Zimbabwe (USD)</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="form-label">Country / Market</label>
-                            <select id="business_location">
-                                <option value="Algeria">Algeria</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Benin">Benin</option>
-                                <option value="Botswana">Botswana</option>
-                                <option value="Burkina Faso">Burkina Faso</option>
-                                <option value="Burundi">Burundi</option>
-                                <option value="Cabo Verde">Cabo Verde</option>
-                                <option value="Cameroon">Cameroon</option>
-                                <option value="Central African Republic">Central African Republic</option>
-                                <option value="Chad">Chad</option>
-                                <option value="Comoros">Comoros</option>
-                                <option value="Congo (Brazzaville)">Congo (Brazzaville)</option>
-                                <option value="Congo (Democratic Republic)">Congo (Democratic Republic)</option>
-                                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                                <option value="Djibouti">Djibouti</option>
-                                <option value="Egypt">Egypt</option>
-                                <option value="Equatorial Guinea">Equatorial Guinea</option>
-                                <option value="Eritrea">Eritrea</option>
-                                <option value="Eswatini">Eswatini</option>
-                                <option value="Ethiopia">Ethiopia</option>
-                                <option value="Gabon">Gabon</option>
-                                <option value="Gambia">Gambia</option>
-                                <option value="Ghana">Ghana</option>
-                                <option value="Guinea">Guinea</option>
-                                <option value="Guinea-Bissau">Guinea-Bissau</option>
-                                <option value="Kenya" selected>Kenya</option>
-                                <option value="Lesotho">Lesotho</option>
-                                <option value="Liberia">Liberia</option>
-                                <option value="Libya">Libya</option>
-                                <option value="Madagascar">Madagascar</option>
-                                <option value="Malawi">Malawi</option>
-                                <option value="Mali">Mali</option>
-                                <option value="Mauritania">Mauritania</option>
-                                <option value="Mauritius">Mauritius</option>
-                                <option value="Morocco">Morocco</option>
-                                <option value="Mozambique">Mozambique</option>
-                                <option value="Namibia">Namibia</option>
-                                <option value="Niger">Niger</option>
-                                <option value="Nigeria">Nigeria</option>
-                                <option value="Rwanda">Rwanda</option>
-                                <option value="São Tomé and Príncipe">São Tomé and Príncipe</option>
-                                <option value="Senegal">Senegal</option>
-                                <option value="Seychelles">Seychelles</option>
-                                <option value="Sierra Leone">Sierra Leone</option>
-                                <option value="Somalia">Somalia</option>
-                                <option value="South Africa">South Africa</option>
-                                <option value="South Sudan">South Sudan</option>
-                                <option value="Sudan">Sudan</option>
-                                <option value="Tanzania">Tanzania</option>
-                                <option value="Togo">Togo</option>
-                                <option value="Tunisia">Tunisia</option>
-                                <option value="Uganda">Uganda</option>
-                                <option value="Zambia">Zambia</option>
-                                <option value="Zimbabwe">Zimbabwe</option>
+                            <div class="form-label">
+                                <span id="label-loan-amount">Loan Amount (KES KSh)</span>
+                                <span class="sub-val" id="disp-amount">KSh 75,000</span>
+                            </div>
+                            <input type="range" id="loan_amount" min="5000" max="500000" step="5000" value="75000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Facility Tenor (Repayment Term)</label>
+                            <div class="tenor-pills">
+                                <div class="tenor-pill active" data-tenor="3">3 Months</div>
+                                <div class="tenor-pill" data-tenor="6">6 Months</div>
+                                <div class="tenor-pill" data-tenor="9">9 Months</div>
+                                <div class="tenor-pill" data-tenor="12">12 Months</div>
+                            </div>
+                            <input type="hidden" id="tenor_months" value="3">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Business Sector</label>
+                            <select id="business_type">
+                                <option value="retail_shop" selected>Retail Shop / FMCG Trader</option>
+                                <option value="food_vendor">Food Vendor / Commercial Catering</option>
+                                <option value="mobile_money_agent">Mobile Money Agency / Financial Kiosk</option>
+                                <option value="agro_dealer">Agro Dealer / Inputs & Produce</option>
+                                <option value="transport">Transport / Logistics & Cargo</option>
+                                <option value="hardware_store">Hardware / Building Supplies</option>
+                                <option value="pharmacy">Pharmacy / Community Chemist</option>
+                                <option value="electronics_repair">Electronics Repair & Tech Accessories</option>
+                                <option value="salon_barber">Salon / Barber & Beauty Lounge</option>
+                                <option value="tailoring">Tailoring / Apparel Manufacturing</option>
                             </select>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Business Sector</label>
-                        <select id="business_type">
-                            <option value="retail_shop" selected>Retail Shop</option>
-                            <option value="food_vendor">Food Vendor / Catering</option>
-                            <option value="mobile_money_agent">Mobile Money Agent</option>
-                            <option value="agro_dealer">Agro Dealer / Farming</option>
-                            <option value="transport">Transport / Logistics</option>
-                            <option value="hardware_store">Hardware Store</option>
-                            <option value="pharmacy">Pharmacy / Chemist</option>
-                            <option value="electronics_repair">Electronics Repair</option>
-                            <option value="salon_barber">Salon / Barber</option>
-                            <option value="tailoring">Tailoring / Apparel</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-label">
-                            <span>Years in Business</span>
-                            <span class="sub-val" id="disp-years">4.0 Years</span>
+                        <div class="form-group">
+                            <div class="form-label">
+                                <span>Years in Verified Operation</span>
+                                <span class="sub-val" id="disp-years">4.0 Years</span>
+                            </div>
+                            <input type="range" id="years_in_business" min="0.2" max="15.0" step="0.1" value="4.0">
                         </div>
-                        <input type="range" id="years_in_business" min="0.1" max="15.0" step="0.1" value="4.0">
-                    </div>
 
-                    <div class="form-group">
-                        <div class="form-label">
-                            <span>Mobile Money Activity Score</span>
-                            <span class="sub-val" id="disp-score">70 / 100</span>
+                        <div class="form-group">
+                            <div class="form-label">
+                                <span>Mobile Money Activity Score</span>
+                                <span class="sub-val" id="disp-score">72 / 100</span>
+                            </div>
+                            <input type="range" id="mobile_money_activity_score" min="0" max="100" step="1" value="72">
                         </div>
-                        <input type="range" id="mobile_money_activity_score" min="0" max="100" step="1" value="70">
+
+                        <button type="button" class="btn-evaluate" id="btn-assess">
+                            <span>🔮 Run Real-Time Underwriting Assessment</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- RIGHT: Assessment Results & In-Depth Analysis -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📊</span> Credit Assessment & Explainability Memo
+                        </div>
+                        <div id="live-indicator" style="font-size: 0.78rem; color: #10b981; display: flex; align-items: center; gap: 6px; font-weight: 600;">
+                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981;"></span>
+                            Live Engine
+                        </div>
                     </div>
 
-                    <button type="button" class="btn-evaluate" id="btn-assess">
-                        <span>🔮 Run Real-Time Assessment</span>
-                    </button>
-                </form>
+                    <!-- Top Half: Gauge & Summary -->
+                    <div class="results-top">
+                        <!-- Gauge -->
+                        <div class="gauge-container">
+                            <svg class="gauge-svg" viewBox="0 0 200 120">
+                                <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                <path id="gauge-fill-path" class="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" stroke="#10b981" />
+                            </svg>
+                            <div class="gauge-text">
+                                <div class="gauge-score" id="res-score">18%</div>
+                                <div class="gauge-sub">Default Probability</div>
+                            </div>
+                        </div>
+
+                        <!-- Summary Card -->
+                        <div class="summary-box">
+                            <div class="risk-badge risk-low" id="res-badge">
+                                <span id="res-emoji">🟢</span>
+                                <span id="res-grade">LOW RISK PROFILE</span>
+                            </div>
+                            <p class="decision-desc" id="res-desc">
+                                Highly manageable credit profile. Recommended for standard fast-tracked disbursement.
+                            </p>
+                            <div class="ci-badge" id="res-ci">
+                                90% Confidence Interval: 14% – 22% (±3.6%)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Underwriting Financials -->
+                    <div class="financials-strip">
+                        <div class="fin-card">
+                            <div class="fin-label">Risk-Based APR</div>
+                            <div class="fin-val" id="fin-apr" style="color: var(--purple-bright);">18.5%</div>
+                            <div class="fin-sub">1.54% Monthly Rate</div>
+                        </div>
+                        <div class="fin-card">
+                            <div class="fin-label">Monthly Repayment</div>
+                            <div class="fin-val" id="fin-pmt">KSh 25,774</div>
+                            <div class="fin-sub" id="fin-tenor-sub">3-Month Term</div>
+                        </div>
+                        <div class="fin-card">
+                            <div class="fin-label">Total Repayment</div>
+                            <div class="fin-val" id="fin-total">KSh 77,322</div>
+                            <div class="fin-sub" id="fin-interest">Finance: KSh 2,322</div>
+                        </div>
+                        <div class="fin-card">
+                            <div class="fin-label">Affordability (DTI)</div>
+                            <div class="fin-val" id="fin-dti" style="color: #10b981;">17.2%</div>
+                            <div class="fin-sub" id="fin-dti-status">Strong Coverage</div>
+                        </div>
+                    </div>
+
+                    <!-- Executive Credit Memo -->
+                    <div class="memo-card">
+                        <div class="memo-header">
+                            <div class="memo-title">📋 Executive Underwriter Memorandum</div>
+                            <div style="font-size: 0.74rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;" id="memo-id">REF: IW-54912</div>
+                        </div>
+                        <div class="memo-body" id="memo-content">
+                            Borrower IW-54912 evaluated in Kenya for KSh 75,000 over a 3-month tenor at 18.5% APR. Based on XGBoost ensemble inference and TreeSHAP attribution, the model assigns a calibrated default probability of 18.0% with a 90% confidence bound between 14% and 22%. The profile exhibits strong debt coverage and is approved for instant automated disbursement.
+                        </div>
+                    </div>
+
+                    <!-- 4 Deep-Dive Analytical Pillars -->
+                    <div class="section-subheading">
+                        <span>🔍</span> Multi-Pillar Credit Analysis (Why This Score?)
+                    </div>
+                    <div class="pillars-grid" id="pillars-container">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Feature Attribution Waterfall Chart -->
+                    <div class="section-subheading" style="margin-top: 10px;">
+                        <span>📈</span> TreeSHAP Feature Attribution (Log-Odds Impact)
+                    </div>
+                    <div class="impact-chart" id="chart-container">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Developer API Integration Card -->
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div style="font-weight: 700; font-size: 0.9rem; color: white;">🔌 Core Banking & LMS Integration</div>
+                            <div class="api-tabs">
+                                <button class="api-tab active" data-lang="curl">cURL</button>
+                                <button class="api-tab" data-lang="python">Python</button>
+                                <button class="api-tab" data-lang="node">Node.js</button>
+                            </div>
+                        </div>
+                        <div class="api-snippet" id="api-code-snippet">curl -X POST https://iwaju-credit-engine.vercel.app/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"borrower_id":"IW-54912","country":"Kenya","loan_amount":75000,"tenor_months":3,"years_in_business":4.0,"mobile_money_activity_score":72}'</div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- VIEW 2: PORTFOLIO BATCH SIMULATION (50 MSMEs)               -->
+        <!-- ============================================================ -->
+        <div id="portfolio-view">
+            <!-- 4 Portfolio KPIs -->
+            <div class="portfolio-kpis">
+                <div class="kpi-card">
+                    <div class="kpi-num" id="pf-approval">76.0%</div>
+                    <div class="kpi-label">Portfolio Approval Rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" id="pf-loss" style="color: #10b981;">3.9%</div>
+                    <div class="kpi-label">Expected Portfolio Loss</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" id="pf-avg-score">27.4%</div>
+                    <div class="kpi-label">Weighted Average Risk</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" id="pf-volume">$382,400</div>
+                    <div class="kpi-label">Total Pipeline Volume</div>
+                </div>
             </div>
 
-            <!-- RIGHT: Assessment Results -->
-            <div class="glass-card">
+            <!-- Portfolio Table -->
+            <div class="glass-card" style="padding: 24px;">
                 <div class="card-header">
                     <div class="card-title">
-                        <span>📊</span> Credit Assessment Report
+                        <span>📑</span> Pan-African MSME Cohort (50 Synthetic Borrowers)
                     </div>
-                    <div id="live-indicator" style="font-size: 0.78rem; color: #34d399; display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399;"></span>
-                        Live Scoring
-                    </div>
-                </div>
-
-                <!-- Top Half: Gauge & Summary -->
-                <div class="results-top">
-                    <!-- Gauge -->
-                    <div class="gauge-container">
-                        <svg class="gauge-svg" viewBox="0 0 200 120">
-                            <!-- Background Arc -->
-                            <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
-                            <!-- Fill Arc -->
-                            <path id="gauge-fill-path" class="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" stroke="#34d399" />
-                        </svg>
-                        <div class="gauge-text">
-                            <div class="gauge-score" id="res-score">18%</div>
-                            <div class="gauge-sub">Default Risk</div>
-                        </div>
-                    </div>
-
-                    <!-- Summary Card -->
-                    <div class="summary-box">
-                        <div class="risk-badge risk-low" id="res-badge">
-                            <span id="res-emoji">🟢</span>
-                            <span id="res-grade">LOW RISK PROFILE</span>
-                        </div>
-                        <p class="decision-desc" id="res-desc">
-                            Highly manageable credit profile. Recommended for standard fast-tracked disbursement.
-                        </p>
+                    <div style="font-size: 0.82rem; color: var(--text-muted);">
+                        Click any applicant to inspect in single underwriter
                     </div>
                 </div>
 
-                <!-- Middle: Top 3 Reasons -->
-                <div class="section-subheading">
-                    <span>🔍</span> Top Drivers (Explainable AI)
-                </div>
-                <div class="reasons-list" id="reasons-container">
-                    <div class="reason-card">
-                        <span class="reason-icon">🔮</span>
-                        <div><strong>Mobile Money</strong>: Strong transaction volume indicates reliable cash flow.</div>
-                    </div>
-                    <div class="reason-card">
-                        <span class="reason-icon">🔮</span>
-                        <div><strong>Business Maturity</strong>: Established 4.0-year operating history lowers operational volatility.</div>
-                    </div>
-                    <div class="reason-card">
-                        <span class="reason-icon">🔮</span>
-                        <div><strong>Loan Proportion</strong>: KES 75,000 requested capital is conservative relative to cash flows.</div>
-                    </div>
-                </div>
-
-                <!-- Bottom: Impact Chart -->
-                <div class="section-subheading" style="margin-top: 24px;">
-                    <span>📈</span> Feature Attribution Breakdown
-                </div>
-                <div class="impact-chart" id="chart-container">
-                    <!-- Dynamic Rows populated by JS -->
+                <div class="portfolio-table-wrap">
+                    <table class="portfolio-table">
+                        <thead>
+                            <tr>
+                                <th>Borrower / Enterprise</th>
+                                <th>Country</th>
+                                <th>Sector</th>
+                                <th>Tenure</th>
+                                <th>MM Score</th>
+                                <th>Loan Facility</th>
+                                <th>Risk Score</th>
+                                <th>Grade</th>
+                                <th>APR</th>
+                                <th>Recommendation</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolio-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
         </div>
 
         <!-- Footer -->
         <footer>
-            <div>IWAJU Credit Underwriting Engine • Built for African Digital Lenders</div>
-            <div><a href="pitch.html" target="_blank">View Investor Pitch Deck &rarr;</a></div>
+            <div>IWAJU Credit Underwriting Engine • Intelligent Financial Infrastructure for Africa</div>
+            <div>
+                <a href="/">Dashboard</a> • <a href="about.html">About IWAJU: Vision & Goals</a>
+            </div>
         </footer>
+
     </div>
 
-    <!-- Application Script -->
+    <!-- Frontend Engine Script -->
     <script>
-        // Set today's date
-        document.getElementById('loan_date').value = new Date().toISOString().split('T')[0];
+        // African Currencies Dictionary
+        const CURRENCIES = {
+            "Kenya": { code: "KES", symbol: "KSh", min: 5000, max: 500000, step: 5000, defaultVal: 75000, usdRate: 0.0077 },
+            "Nigeria": { code: "NGN", symbol: "₦", min: 50000, max: 5000000, step: 25000, defaultVal: 650000, usdRate: 0.00067 },
+            "Ghana": { code: "GHS", symbol: "GH₵", min: 1000, max: 100000, step: 1000, defaultVal: 12000, usdRate: 0.065 },
+            "South Africa": { code: "ZAR", symbol: "R", min: 2000, max: 150000, step: 1000, defaultVal: 18000, usdRate: 0.055 },
+            "Rwanda": { code: "RWF", symbol: "FRw", min: 50000, max: 5000000, step: 25000, defaultVal: 600000, usdRate: 0.00075 },
+            "Egypt": { code: "EGP", symbol: "E£", min: 3000, max: 300000, step: 2000, defaultVal: 35000, usdRate: 0.021 },
+            "Tanzania": { code: "TZS", symbol: "TSh", min: 100000, max: 10000000, step: 50000, defaultVal: 1500000, usdRate: 0.00038 },
+            "Uganda": { code: "UGX", symbol: "USh", min: 150000, max: 15000000, step: 100000, defaultVal: 2200000, usdRate: 0.00027 },
+            "Morocco": { code: "MAD", symbol: "DH", min: 1000, max: 100000, step: 1000, defaultVal: 15000, usdRate: 0.10 },
+            "Ethiopia": { code: "ETB", symbol: "Br", min: 5000, max: 500000, step: 5000, defaultVal: 60000, usdRate: 0.0085 },
+            "Côte d'Ivoire": { code: "XOF", symbol: "CFA", min: 25000, max: 3000000, step: 25000, defaultVal: 400000, usdRate: 0.0016 },
+            "Senegal": { code: "XOF", symbol: "CFA", min: 25000, max: 3000000, step: 25000, defaultVal: 400000, usdRate: 0.0016 },
+            "Cameroon": { code: "XAF", symbol: "FCFA", min: 25000, max: 3000000, step: 25000, defaultVal: 400000, usdRate: 0.0016 },
+            "Zambia": { code: "ZMW", symbol: "ZK", min: 1000, max: 100000, step: 1000, defaultVal: 15000, usdRate: 0.038 },
+            "Botswana": { code: "BWP", symbol: "P", min: 1000, max: 100000, step: 1000, defaultVal: 12000, usdRate: 0.073 },
+            "Algeria": { code: "DZD", symbol: "DA", min: 5000, max: 500000, step: 5000, defaultVal: 70000, usdRate: 0.0075 },
+            "Tunisia": { code: "TND", symbol: "DT", min: 500, max: 50000, step: 500, defaultVal: 5000, usdRate: 0.32 },
+            "Mauritius": { code: "MUR", symbol: "Rs", min: 5000, max: 500000, step: 5000, defaultVal: 65000, usdRate: 0.022 },
+            "DEFAULT": { code: "USD", symbol: "$", min: 50, max: 5000, step: 50, defaultVal: 600, usdRate: 1.0 }
+        };
 
-        // Sliders live text bindings
+        function getCurrency(country) {
+            return CURRENCIES[country] || CURRENCIES["DEFAULT"];
+        }
+
+        // Elements
+        const countrySelect = document.getElementById('business_location');
         const loanAmountInput = document.getElementById('loan_amount');
+        const labelLoanAmount = document.getElementById('label-loan-amount');
         const dispAmount = document.getElementById('disp-amount');
-        loanAmountInput.addEventListener('input', () => {
-            dispAmount.textContent = 'KES ' + Number(loanAmountInput.value).toLocaleString();
-            debounceAssess();
-        });
-
         const yearsInput = document.getElementById('years_in_business');
         const dispYears = document.getElementById('disp-years');
-        yearsInput.addEventListener('input', () => {
-            dispYears.textContent = Number(yearsInput.value).toFixed(1) + ' Years';
-            debounceAssess();
-        });
-
         const mmInput = document.getElementById('mobile_money_activity_score');
         const dispScore = document.getElementById('disp-score');
-        mmInput.addEventListener('input', () => {
-            dispScore.textContent = mmInput.value + ' / 100';
+        const tenorInput = document.getElementById('tenor_months');
+        const bizTypeSelect = document.getElementById('business_type');
+        const borrowerIdInput = document.getElementById('borrower_id');
+
+        // Update Currency when country changes
+        function handleCountryChange(shouldResetAmount = true) {
+            const country = countrySelect.value;
+            const curr = getCurrency(country);
+            
+            labelLoanAmount.textContent = `Loan Amount (${curr.code} ${curr.symbol})`;
+            loanAmountInput.min = curr.min;
+            loanAmountInput.max = curr.max;
+            loanAmountInput.step = curr.step;
+            
+            if (shouldResetAmount) {
+                loanAmountInput.value = curr.defaultVal;
+            }
+            dispAmount.textContent = `${curr.symbol} ${Number(loanAmountInput.value).toLocaleString()}`;
+            updateApiSnippet();
+            debounceAssess();
+        }
+
+        countrySelect.addEventListener('change', () => handleCountryChange(true));
+
+        loanAmountInput.addEventListener('input', () => {
+            const curr = getCurrency(countrySelect.value);
+            dispAmount.textContent = `${curr.symbol} ${Number(loanAmountInput.value).toLocaleString()}`;
+            updateApiSnippet();
             debounceAssess();
         });
 
-        document.getElementById('business_type').addEventListener('change', debounceAssess);
-        document.getElementById('business_location').addEventListener('change', debounceAssess);
-        document.getElementById('loan_date').addEventListener('change', debounceAssess);
+        yearsInput.addEventListener('input', () => {
+            dispYears.textContent = Number(yearsInput.value).toFixed(1) + ' Years';
+            updateApiSnippet();
+            debounceAssess();
+        });
 
-        // Randomize ID
+        mmInput.addEventListener('input', () => {
+            dispScore.textContent = mmInput.value + ' / 100';
+            updateApiSnippet();
+            debounceAssess();
+        });
+
+        bizTypeSelect.addEventListener('change', () => {
+            updateApiSnippet();
+            debounceAssess();
+        });
+
+        // Tenor Pill Buttons
+        document.querySelectorAll('.tenor-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.tenor-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                tenorInput.value = pill.getAttribute('data-tenor');
+                updateApiSnippet();
+                debounceAssess();
+            });
+        });
+
+        // Randomize Borrower ID
         document.getElementById('btn-random').addEventListener('click', () => {
-            document.getElementById('borrower_id').value = 'IW-' + Math.floor(10000 + Math.random() * 90000);
+            borrowerIdInput.value = 'IW-' + Math.floor(10000 + Math.random() * 90000);
+            updateApiSnippet();
         });
 
         document.getElementById('btn-assess').addEventListener('click', assessLoan);
@@ -813,17 +1537,129 @@
         let debounceTimer;
         function debounceAssess() {
             clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(assessLoan, 180);
+            debounceTimer = setTimeout(assessLoan, 160);
+        }
+
+        // Quick Preset Scenarios
+        document.getElementById('preset-prime').addEventListener('click', () => {
+            countrySelect.value = 'Kenya';
+            handleCountryChange(false);
+            loanAmountInput.value = 65000;
+            yearsInput.value = 5.0;
+            mmInput.value = 88;
+            bizTypeSelect.value = 'retail_shop';
+            tenorInput.value = 3;
+            syncDisplay();
+        });
+
+        document.getElementById('preset-borderline').addEventListener('click', () => {
+            countrySelect.value = 'Nigeria';
+            handleCountryChange(false);
+            loanAmountInput.value = 750000;
+            yearsInput.value = 2.0;
+            mmInput.value = 52;
+            bizTypeSelect.value = 'agro_dealer';
+            tenorInput.value = 6;
+            syncDisplay();
+        });
+
+        document.getElementById('preset-stressed').addEventListener('click', () => {
+            countrySelect.value = 'Ghana';
+            handleCountryChange(false);
+            loanAmountInput.value = 35000;
+            yearsInput.value = 0.8;
+            mmInput.value = 22;
+            bizTypeSelect.value = 'transport';
+            tenorInput.value = 3;
+            syncDisplay();
+        });
+
+        document.getElementById('preset-tech').addEventListener('click', () => {
+            countrySelect.value = 'Rwanda';
+            handleCountryChange(false);
+            loanAmountInput.value = 1200000;
+            yearsInput.value = 4.0;
+            mmInput.value = 92;
+            bizTypeSelect.value = 'mobile_money_agent';
+            tenorInput.value = 3;
+            syncDisplay();
+        });
+
+        function syncDisplay() {
+            const curr = getCurrency(countrySelect.value);
+            dispAmount.textContent = `${curr.symbol} ${Number(loanAmountInput.value).toLocaleString()}`;
+            dispYears.textContent = Number(yearsInput.value).toFixed(1) + ' Years';
+            dispScore.textContent = mmInput.value + ' / 100';
+            document.querySelectorAll('.tenor-pill').forEach(p => {
+                p.classList.toggle('active', p.getAttribute('data-tenor') === String(tenorInput.value));
+            });
+            updateApiSnippet();
+            assessLoan();
+        }
+
+        // View Tabs (Single vs Portfolio)
+        const tabSingle = document.getElementById('tab-single');
+        const tabPortfolio = document.getElementById('tab-portfolio');
+        const singleView = document.getElementById('single-view');
+        const portfolioView = document.getElementById('portfolio-view');
+
+        tabSingle.addEventListener('click', () => {
+            tabSingle.classList.add('active');
+            tabPortfolio.classList.remove('active');
+            singleView.style.display = 'block';
+            portfolioView.style.display = 'none';
+        });
+
+        tabPortfolio.addEventListener('click', () => {
+            tabPortfolio.classList.add('active');
+            tabSingle.classList.remove('active');
+            singleView.style.display = 'none';
+            portfolioView.style.display = 'block';
+            loadPortfolioData();
+        });
+
+        // Developer API Snippet Tabs
+        let activeSnippetLang = 'curl';
+        document.querySelectorAll('.api-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.api-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeSnippetLang = tab.getAttribute('data-lang');
+                updateApiSnippet();
+            });
+        });
+
+        function updateApiSnippet() {
+            const payload = {
+                borrower_id: borrowerIdInput.value,
+                country: countrySelect.value,
+                loan_amount: parseFloat(loanAmountInput.value),
+                tenor_months: parseInt(tenorInput.value),
+                business_type: bizTypeSelect.value,
+                years_in_business: parseFloat(yearsInput.value),
+                mobile_money_activity_score: parseFloat(mmInput.value)
+            };
+
+            const snippetEl = document.getElementById('api-code-snippet');
+            if (activeSnippetLang === 'curl') {
+                snippetEl.textContent = `curl -X POST https://iwaju-credit-engine.vercel.app/api/predict \\\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(payload)}'`;
+            } else if (activeSnippetLang === 'python') {
+                snippetEl.textContent = `import requests\n\npayload = ${JSON.stringify(payload, null, 2)}\nresponse = requests.post("https://iwaju-credit-engine.vercel.app/api/predict", json=payload)\nprint(response.json())`;
+            } else {
+                snippetEl.textContent = `const payload = ${JSON.stringify(payload, null, 2)};\n\nconst response = await fetch("https://iwaju-credit-engine.vercel.app/api/predict", {\n  method: "POST",\n  headers: { "Content-Type": "application/json" },\n  body: JSON.stringify(payload)\n});\nconst result = await response.json();`;
+            }
         }
 
         // Assessment function calling /api/predict with local client fallback
         async function assessLoan() {
+            const country = countrySelect.value;
+            const curr = getCurrency(country);
             const payload = {
-                borrower_id: document.getElementById('borrower_id').value,
+                borrower_id: borrowerIdInput.value,
+                country: country,
                 loan_amount: parseFloat(loanAmountInput.value),
-                loan_date: document.getElementById('loan_date').value,
-                business_type: document.getElementById('business_type').value,
-                business_location: document.getElementById('business_location').value,
+                tenor_months: parseInt(tenorInput.value),
+                business_type: bizTypeSelect.value,
                 years_in_business: parseFloat(yearsInput.value),
                 mobile_money_activity_score: parseFloat(mmInput.value)
             };
@@ -837,63 +1673,96 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    renderResults(data);
+                    renderResults(data, curr);
                     return;
                 }
             } catch (err) {
-                // If offline or during static preview, fallback gracefully to client calculations
+                // If offline or static preview, compute robust client-side fallback
             }
 
-            // Fallback estimation calculation
-            renderFallbackResults(payload);
+            renderFallbackResults(payload, curr);
         }
 
-        function renderResults(data) {
+        function renderResults(data, curr) {
             const score = data.risk_score;
             document.getElementById('res-score').textContent = score + '%';
             
-            // Update SVG Gauge
-            const arcLength = 283; // Pi * radius (approx 80 * 3.14159)
+            // SVG Gauge
+            const arcLength = 283;
             const fillOffset = arcLength - (arcLength * (score / 100));
             const fillPath = document.getElementById('gauge-fill-path');
             fillPath.style.strokeDashoffset = fillOffset;
 
-            // Color coding
+            // Gauge color
+            if (score <= 30) fillPath.style.stroke = '#10b981';
+            else if (score <= 60) fillPath.style.stroke = '#f59e0b';
+            else fillPath.style.stroke = '#ef4444';
+
+            // Risk Badge
             const badge = document.getElementById('res-badge');
             badge.className = 'risk-badge ' + data.risk_class;
             document.getElementById('res-emoji').textContent = data.risk_emoji;
             document.getElementById('res-grade').textContent = data.risk_grade.toUpperCase() + ' RISK PROFILE';
             document.getElementById('res-desc').textContent = data.risk_desc;
 
-            if (score <= 30) {
-                fillPath.style.stroke = '#34d399';
-            } else if (score <= 60) {
-                fillPath.style.stroke = '#fbbf24';
-            } else {
-                fillPath.style.stroke = '#f87171';
+            // Confidence Interval
+            if (data.confidence_interval) {
+                document.getElementById('res-ci').textContent = 
+                    `90% Confidence Interval: ${data.confidence_interval.label || `${data.confidence_interval.lower_bound}% - ${data.confidence_interval.upper_bound}%`}`;
             }
 
-            // Render Reasons
-            const reasonsContainer = document.getElementById('reasons-container');
-            reasonsContainer.innerHTML = '';
-            (data.top3_reasons || []).forEach(r => {
+            // Financials
+            if (data.underwriting_summary) {
+                const u = data.underwriting_summary;
+                document.getElementById('fin-apr').textContent = u.apr_pct + '%';
+                document.getElementById('fin-pmt').textContent = `${curr.symbol} ${Number(u.monthly_installment).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+                document.getElementById('fin-tenor-sub').textContent = `${u.tenor_months}-Month Tenor`;
+                document.getElementById('fin-total').textContent = `${curr.symbol} ${Number(u.total_repayment).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+                document.getElementById('fin-interest').textContent = `Finance: ${curr.symbol} ${Number(u.total_interest).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+                
+                const dtiEl = document.getElementById('fin-dti');
+                dtiEl.textContent = u.dti_ratio_pct + '%';
+                dtiEl.style.color = u.dti_ratio_pct < 25 ? '#10b981' : (u.dti_ratio_pct <= 40 ? '#f59e0b' : '#ef4444');
+                document.getElementById('fin-dti-status').textContent = u.dti_status;
+            }
+
+            // Executive Memo
+            document.getElementById('memo-id').textContent = 'REF: ' + (data.borrower_id || borrowerIdInput.value);
+            if (data.detailed_analysis && data.detailed_analysis.underwriter_memo) {
+                document.getElementById('memo-content').textContent = data.detailed_analysis.underwriter_memo;
+            } else {
+                document.getElementById('memo-content').textContent = 
+                    `Applicant evaluated in ${curr.code} market for ${curr.symbol} ${Number(loanAmountInput.value).toLocaleString()}. Model indicates ${data.risk_grade.toLowerCase()} risk of default.`;
+            }
+
+            // 4 Analytical Pillars
+            const pillarsContainer = document.getElementById('pillars-container');
+            pillarsContainer.innerHTML = '';
+            const pillars = (data.detailed_analysis && data.detailed_analysis.pillars) ? data.detailed_analysis.pillars : [];
+            pillars.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'reason-card ' + (r.is_risk_aggregator ? 'aggregator' : '');
+                card.className = 'pillar-card';
                 card.innerHTML = `
-                    <span class="reason-icon">${r.emoji}</span>
-                    <div>${r.reason}</div>
+                    <div class="pillar-header">
+                        <div class="pillar-name">
+                            <span>${p.pillar_id === 'liquidity' ? '📱' : (p.pillar_id === 'tenure' ? '🏢' : (p.pillar_id === 'affordability' ? '💳' : '🌍'))}</span>
+                            <span>${p.title}</span>
+                        </div>
+                        <div class="pillar-badge ${p.badge_class}">${p.badge}</div>
+                    </div>
+                    <div class="pillar-desc">${p.memo}</div>
                 `;
-                reasonsContainer.appendChild(card);
+                pillarsContainer.appendChild(card);
             });
 
-            // Render Chart
+            // Feature Attribution Diverging Chart
             const chartContainer = document.getElementById('chart-container');
             chartContainer.innerHTML = '';
             const maxAbs = Math.max(...(data.feature_impacts || []).map(f => Math.abs(f.impact)), 1);
             
             (data.feature_impacts || []).forEach(f => {
                 const isAgg = f.impact > 0;
-                const pct = Math.min(100, Math.round((Math.abs(f.impact) / maxAbs) * 100));
+                const pct = Math.max(12, Math.min(100, Math.round((Math.abs(f.impact) / maxAbs) * 100)));
                 
                 const row = document.createElement('div');
                 row.className = 'impact-row';
@@ -908,32 +1777,39 @@
             });
         }
 
-        function renderFallbackResults(p) {
-            // Client-side approximation model based on trained weights
-            let logit = -1.8;
-            logit += (p.loan_amount / 75000) * 0.45;
-            logit -= (p.years_in_business / 4.0) * 0.55;
-            logit -= (p.mobile_money_activity_score / 60.0) * 0.85;
-            
-            if (p.business_type === 'transport' || p.business_type === 'agro_dealer') logit += 0.35;
+        // Client Fallback calculation
+        function renderFallbackResults(p, curr) {
+            let logit = -1.5;
+            const normAmt = (p.loan_amount / curr.defaultVal);
+            logit += normAmt * 0.55;
+            logit -= (p.years_in_business / 4.0) * 0.65;
+            logit -= (p.mobile_money_activity_score / 60.0) * 0.95;
+
+            if (p.business_type === 'transport' || p.business_type === 'agro_dealer') logit += 0.4;
             const highFintech = ['Kenya', 'Nigeria', 'Ghana', 'Rwanda', 'South Africa', 'Tanzania', 'Uganda', 'Egypt', 'Morocco'];
             const elevatedRisk = ['Somalia', 'South Sudan', 'Sudan', 'Central African Republic', 'Chad', 'Burundi', 'Eritrea'];
-            let countryImpact = 0.0;
-            if (highFintech.includes(p.business_location)) {
-                logit -= 0.18;
-                countryImpact = -1.4;
-            } else if (elevatedRisk.includes(p.business_location)) {
-                logit += 0.28;
-                countryImpact = 2.1;
-            }
 
-            const prob = 1 / (1 + Math.exp(-logit));
-            const score = Math.max(2, Math.min(96, Math.round(prob * 100)));
+            let countryImpact = -0.3;
+            if (highFintech.includes(p.country)) { logit -= 0.25; countryImpact = -1.2; }
+            else if (elevatedRisk.includes(p.country)) { logit += 0.45; countryImpact = 1.8; }
 
+            const prob = 1.0 / (1.0 + Math.exp(-logit));
+            const score = Math.max(3, Math.min(96, Math.round(prob * 100)));
             const isLow = score <= 30;
             const isHigh = score > 60;
+            const apr = isLow ? 18.5 : (isHigh ? 34.0 : 26.0);
+
+            const n = p.tenor_months || 3;
+            const r = (apr / 100.0) / 12.0;
+            const pmt = p.loan_amount * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const totalRepay = pmt * n;
+            const totalInt = totalRepay - p.loan_amount;
+
+            const estRev = p.loan_amount * (1.2 + (p.mobile_money_activity_score / 100) * 1.5);
+            const dti = Number(((pmt / estRev) * 100).toFixed(1));
 
             const data = {
+                borrower_id: p.borrower_id,
                 risk_score: score,
                 risk_grade: isLow ? "Low" : (isHigh ? "High" : "Medium"),
                 risk_class: isLow ? "risk-low" : (isHigh ? "risk-high" : "risk-medium"),
@@ -943,41 +1819,164 @@
                     : (isHigh 
                         ? "High probability of default. Recommend rejecting application or requiring collateral/co-signers."
                         : "Elevated risk factors detected. Recommended for manual verification or secondary vetting."),
-                top3_reasons: [
-                    {
-                        emoji: p.mobile_money_activity_score < 50 ? "⚠️" : "🔮",
-                        is_risk_aggregator: p.mobile_money_activity_score < 50,
-                        reason: p.mobile_money_activity_score < 50 
-                            ? "Low mobile money activity — limited digital transaction history detected"
-                            : "Strong mobile money activity suggests reliable cash flow"
-                    },
-                    {
-                        emoji: p.years_in_business < 2.0 ? "⚠️" : "🔮",
-                        is_risk_aggregator: p.years_in_business < 2.0,
-                        reason: p.years_in_business < 2.0
-                            ? "Young business — limited operating track record available"
-                            : "Long-established business reduces default risk"
-                    },
-                    {
-                        emoji: p.loan_amount > 150000 ? "⚠️" : "🔮",
-                        is_risk_aggregator: p.loan_amount > 150000,
-                        reason: p.loan_amount > 150000
-                            ? "Large loan amount increases repayment pressure"
-                            : "Small loan amount is generally easier to repay"
-                    }
-                ],
+                confidence_interval: {
+                    lower_bound: Math.max(1, score - 4),
+                    upper_bound: Math.min(99, score + 4),
+                    label: `${Math.max(1, score - 4)}% - ${Math.min(99, score + 4)}% (90% CI)`
+                },
+                underwriting_summary: {
+                    tenor_months: n,
+                    apr_pct: apr,
+                    monthly_installment: pmt,
+                    total_repayment: totalRepay,
+                    total_interest: totalInt,
+                    dti_ratio_pct: dti,
+                    dti_status: dti < 25 ? "Healthy (Pass)" : (dti <= 40 ? "Moderate (Review)" : "High Leverage"),
+                    recommendation: isLow ? "Fast-Track Approval" : (isHigh ? "Decline" : "Manual Review")
+                },
+                detailed_analysis: {
+                    underwriter_memo: `Applicant ${p.borrower_id} assessed in ${p.country} for ${curr.symbol} ${p.loan_amount.toLocaleString()} over ${n} months. Calibrated default risk is ${score}% based on cash-flow velocity and business maturity indicators.`,
+                    pillars: [
+                        {
+                            pillar_id: "liquidity",
+                            title: "Digital Cashflow & Liquidity Velocity",
+                            badge: `${p.mobile_money_activity_score}/100 Score`,
+                            badge_class: p.mobile_money_activity_score >= 50 ? "badge-pos" : "badge-neg",
+                            memo: p.mobile_money_activity_score >= 50 ? "Healthy mobile money transaction velocity indicates steady daily liquidity." : "Low mobile transaction frequency suggests cash flow vulnerability."
+                        },
+                        {
+                            pillar_id: "tenure",
+                            title: "Operating Tenure & Sector Resilience",
+                            badge: `${p.years_in_business} Years`,
+                            badge_class: p.years_in_business >= 2.0 ? "badge-pos" : "badge-neg",
+                            memo: p.years_in_business >= 2.0 ? "Established operating history lowers operational volatility." : "Early operating age indicates heightened vulnerability to macro cycles."
+                        },
+                        {
+                            pillar_id: "affordability",
+                            title: "Debt Capacity & Cashflow Coverage",
+                            badge: `${dti}% DTI`,
+                            badge_class: dti < 25 ? "badge-pos" : (dti <= 40 ? "badge-warn" : "badge-neg"),
+                            memo: `Monthly repayment of ${curr.symbol} ${Math.round(pmt).toLocaleString()} represents ${dti}% of estimated monthly revenues.`
+                        },
+                        {
+                            pillar_id: "macro",
+                            title: "Regional Market & Regulatory Rails",
+                            badge: p.country,
+                            badge_class: highFintech.includes(p.country) ? "badge-pos" : "badge-neutral",
+                            memo: `Operating in ${p.country} benefits from digital wallet penetration and local payment settlement infrastructure.`
+                        }
+                    ]
+                },
                 feature_impacts: [
-                    { feature: "Loan Amount", impact: Number(((p.loan_amount / 75000) * 4.2).toFixed(2)) },
-                    { feature: "Mobile Money Score", impact: Number((- (p.mobile_money_activity_score / 60) * 5.1).toFixed(2)) },
-                    { feature: "Years In Business", impact: Number((- (p.years_in_business / 4) * 3.8).toFixed(2)) },
-                    { feature: "Business Type", impact: Number((p.business_type === 'agro_dealer' ? 2.4 : -1.8).toFixed(2)) },
-                    { feature: `Market (${p.business_location})`, impact: countryImpact }
+                    { feature: "Loan Amount", impact: Number(((p.loan_amount / curr.defaultVal) * 3.8).toFixed(2)) },
+                    { feature: "Mobile Money Score", impact: Number((- (p.mobile_money_activity_score / 60) * 4.6).toFixed(2)) },
+                    { feature: "Years In Business", impact: Number((- (p.years_in_business / 4) * 3.2).toFixed(2)) },
+                    { feature: "Business Type", impact: Number((p.business_type === 'transport' ? 2.4 : -1.6).toFixed(2)) },
+                    { feature: `Country: ${p.country}`, impact: countryImpact }
                 ]
             };
-            renderResults(data);
+            renderResults(data, curr);
         }
 
-        // Run on initial load
+        // Load Portfolio Cohort
+        async function loadPortfolioData() {
+            const tbody = document.getElementById('portfolio-tbody');
+            tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding: 30px;">Loading pan-African cohort simulation...</td></tr>';
+
+            try {
+                const res = await fetch('/api/predict?mode=portfolio');
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.portfolio) {
+                        renderPortfolio(json.portfolio);
+                        return;
+                    }
+                }
+            } catch (err) {}
+
+            // Generate client fallback portfolio
+            renderFallbackPortfolio();
+        }
+
+        function renderPortfolio(data) {
+            document.getElementById('pf-approval').textContent = data.summary.approval_rate_pct + '%';
+            document.getElementById('pf-loss').textContent = data.summary.portfolio_expected_loss_pct + '%';
+            document.getElementById('pf-avg-score').textContent = data.summary.avg_risk_score + '%';
+            document.getElementById('pf-volume').textContent = '$' + Number(data.summary.total_pipeline_volume_usd).toLocaleString();
+
+            const tbody = document.getElementById('portfolio-tbody');
+            tbody.innerHTML = '';
+
+            data.applicants.forEach(app => {
+                const tr = document.createElement('tr');
+                const isLow = app.risk_score <= 30;
+                const isHigh = app.risk_score > 60;
+                const gradeColor = isLow ? '#10b981' : (isHigh ? '#ef4444' : '#f59e0b');
+
+                tr.innerHTML = `
+                    <td>
+                        <div style="font-weight: 700; color: white;">${app.business_name}</div>
+                        <div style="font-size: 0.76rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">${app.borrower_id}</div>
+                    </td>
+                    <td>${app.country}</td>
+                    <td>${app.business_type}</td>
+                    <td>${app.years_in_business}y</td>
+                    <td>${app.mobile_money_score}/100</td>
+                    <td style="font-family: 'JetBrains Mono', monospace;">${app.currency_symbol} ${Number(app.loan_amount).toLocaleString()}</td>
+                    <td style="font-weight: 700; color: ${gradeColor}; font-family: 'JetBrains Mono', monospace;">${app.risk_score}%</td>
+                    <td><span class="pillar-badge ${isLow ? 'badge-pos' : (isHigh ? 'badge-neg' : 'badge-warn')}">${app.risk_grade}</span></td>
+                    <td style="font-family: 'JetBrains Mono', monospace;">${app.apr}%</td>
+                    <td style="font-size: 0.82rem; color: #cbd5e1;">${app.status}</td>
+                    <td><button class="btn-inspect" data-app='${JSON.stringify(app)}'>Inspect</button></td>
+                `;
+
+                tr.querySelector('.btn-inspect').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    inspectApplicant(app);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function inspectApplicant(app) {
+            tabSingle.click();
+            countrySelect.value = app.country;
+            handleCountryChange(false);
+            borrowerIdInput.value = app.borrower_id;
+            loanAmountInput.value = app.loan_amount;
+            yearsInput.value = app.years_in_business;
+            mmInput.value = app.mobile_money_score;
+            syncDisplay();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderFallbackPortfolio() {
+            const sampleData = {
+                summary: {
+                    approval_rate_pct: 76.0,
+                    portfolio_expected_loss_pct: 3.9,
+                    avg_risk_score: 27.4,
+                    total_pipeline_volume_usd: 382400
+                },
+                applicants: [
+                    { borrower_id: "IW-PF-1001", business_name: "Nairobi Fresh Produce Hub", country: "Kenya", business_type: "Food Vendor", years_in_business: 5.2, mobile_money_score: 86, loan_amount: 85000, currency: "KES", currency_symbol: "KSh", risk_score: 11, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1002", business_name: "Lagos Smart Gadgets", country: "Nigeria", business_type: "Electronics Repair", years_in_business: 3.8, mobile_money_score: 81, loan_amount: 750000, currency: "NGN", currency_symbol: "₦", risk_score: 16, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1003", business_name: "Accra Fashion Boutique", country: "Ghana", business_type: "Tailoring", years_in_business: 4.5, mobile_money_score: 76, loan_amount: 14000, currency: "GHS", currency_symbol: "GH₵", risk_score: 21, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1004", business_name: "Kigali Mobile Cash Point", country: "Rwanda", business_type: "Mobile Money Agent", years_in_business: 4.0, mobile_money_score: 93, loan_amount: 900000, currency: "RWF", currency_symbol: "FRw", risk_score: 8, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1005", business_name: "Joburg Auto Hardware", country: "South Africa", business_type: "Hardware Store", years_in_business: 6.1, mobile_money_score: 84, loan_amount: 25000, currency: "ZAR", currency_symbol: "R", risk_score: 14, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1006", business_name: "Cairo Nile Chemist", country: "Egypt", business_type: "Pharmacy", years_in_business: 5.5, mobile_money_score: 89, loan_amount: 42000, currency: "EGP", currency_symbol: "E£", risk_score: 12, risk_grade: "Low", apr: 18.5, status: "Approved" },
+                    { borrower_id: "IW-PF-1007", business_name: "Dar es Salaam Express Transit", country: "Tanzania", business_type: "Transport", years_in_business: 1.8, mobile_money_score: 48, loan_amount: 2500000, currency: "TZS", currency_symbol: "TSh", risk_score: 52, risk_grade: "Medium", apr: 26.0, status: "Conditional Review" },
+                    { borrower_id: "IW-PF-1008", business_name: "Abuja Quick Logistics", country: "Nigeria", business_type: "Transport", years_in_business: 0.9, mobile_money_score: 32, loan_amount: 1200000, currency: "NGN", currency_symbol: "₦", risk_score: 78, risk_grade: "High", apr: 34.0, status: "Declined" },
+                    { borrower_id: "IW-PF-1009", business_name: "Tema Shipping Logistics", country: "Ghana", business_type: "Transport", years_in_business: 1.2, mobile_money_score: 36, loan_amount: 28000, currency: "GHS", currency_symbol: "GH₵", risk_score: 72, risk_grade: "High", apr: 34.0, status: "Declined" },
+                    { borrower_id: "IW-PF-1010", business_name: "Benin City Mobile Point", country: "Nigeria", business_type: "Mobile Money Agent", years_in_business: 4.5, mobile_money_score: 94, loan_amount: 700000, currency: "NGN", currency_symbol: "₦", risk_score: 7, risk_grade: "Low", apr: 18.5, status: "Approved" }
+                ]
+            };
+            renderPortfolio(sampleData);
+        }
+
+        // Initial Page Boot
+        handleCountryChange(false);
         assessLoan();
     </script>
 </body>

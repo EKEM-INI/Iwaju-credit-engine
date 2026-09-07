@@ -19,8 +19,8 @@ This repository is ready to deploy directly to [Vercel](https://vercel.com/):
 5. Click **"Deploy"**!
 
 Vercel will immediately deploy:
-- 🌐 **Live Dashboard**: Interactive borrower credit risk assessment interface at your Vercel URL.
-- 🔮 **Visual Pitch Deck**: Accessible directly at `https://<your-project>.vercel.app/pitch`.
+- 🌐 **Live Underwriting Dashboard**: Multi-currency borrower credit risk assessment interface at your Vercel URL.
+- 🔭 **About IWAJU**: Vision, mission, and strategic goals accessible at `https://<your-project>.vercel.app/about.html`.
 - ⚡ **Serverless API**: Real-time evaluation endpoint at `https://<your-project>.vercel.app/api/predict`.
 
 ---
@@ -31,7 +31,7 @@ Vercel will immediately deploy:
 Iwaju-credit-engine/
 │
 ├── index.html                  # Responsive modern web dashboard (Vercel frontend)
-├── pitch.html                  # Interactive visual pitch deck (black & purple)
+├── about.html                  # Executive About page (Vision, Mission, Strategic Goals)
 ├── vercel.json                 # Vercel serverless routing configuration
 ├── requirements.txt            # Zero-overhead serverless Python dependencies
 ├── requirements-dev.txt        # Local data science dependencies (XGBoost, SHAP, Streamlit)
@@ -79,7 +79,7 @@ Simply open `index.html` in your browser, or run a local web server:
 ```bash
 python -m http.server 3000
 ```
-Visit `http://localhost:3000` for the dashboard and `http://localhost:3000/pitch.html` for the pitch deck.
+Visit `http://localhost:3000` for the dashboard and `http://localhost:3000/about.html` for the About page.
 
 ### Option B: Local Streamlit Dashboard
 If you prefer running the original Streamlit interface locally:
