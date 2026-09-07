@@ -19,10 +19,9 @@ This repository is ready to deploy directly to [Vercel](https://vercel.com/):
 5. Click **"Deploy"**!
 
 Vercel will immediately deploy:
-- 🌐 **Live Underwriting Dashboard**: Multi-currency borrower credit risk assessment interface at your Vercel URL (`/`).
-- 🎬 **IWAJU Creator Studio**: 20-module AI YouTube Automation & Creator Intelligence Platform (`/studio.html`).
-- 🔭 **About IWAJU**: Vision, mission, and strategic goals (`/about.html`).
-- ⚡ **Serverless API**: Real-time evaluation endpoint (`/api/predict`).
+- 🌐 **Live Underwriting Dashboard**: Multi-currency borrower credit risk assessment interface at your Vercel URL.
+- 🔭 **About IWAJU**: Vision, mission, and strategic goals accessible at `https://<your-project>.vercel.app/about.html`.
+- ⚡ **Serverless API**: Real-time evaluation endpoint at `https://<your-project>.vercel.app/api/predict`.
 
 ---
 
@@ -31,8 +30,7 @@ Vercel will immediately deploy:
 ```text
 Iwaju-credit-engine/
 │
-├── index.html                  # Responsive modern web dashboard (Credit Risk Engine)
-├── studio.html                 # AI YouTube Automation & Creator Intelligence Platform (20 Modules)
+├── index.html                  # Responsive modern web dashboard (Vercel frontend)
 ├── about.html                  # Executive About page (Vision, Mission, Strategic Goals)
 ├── vercel.json                 # Vercel serverless routing configuration
 ├── requirements.txt            # Zero-overhead serverless Python dependencies
@@ -81,7 +79,7 @@ Simply open `index.html` in your browser, or run a local web server:
 ```bash
 python -m http.server 3000
 ```
-Visit `http://localhost:3000` for the Credit Engine, `http://localhost:3000/studio.html` for Creator Studio, and `http://localhost:3000/about.html` for the About page.
+Visit `http://localhost:3000` for the dashboard and `http://localhost:3000/about.html` for the About page.
 
 ### Option B: Local Streamlit Dashboard
 If you prefer running the original Streamlit interface locally:
